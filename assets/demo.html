@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ncaptcha demo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="/assets/ncaptcha.css" rel="stylesheet">
+    <script src="/assets/ncaptcha.js"></script>
+
+</head>
+
+<body>
+    <form action="/demo" method="post">
+
+        <p>
+            <label>Name</label>
+            <input name="name">
+        </p>
+
+        <p>
+            <label>Hello</label>
+            <input name="hello" value="world">
+        </p>
+
+        <div class="ncaptcha">
+
+            <div class="ncaptcha-base">
+
+                <div class="ncaptcha-container">
+                    <div class="ncaptcha-checkbox"></div>
+
+                    <div class="ncaptcha-spinner" style="display: none;"></div>
+
+                    <div class="ncaptcha-checkmark" style="display: none;">
+                        <img src="/assets/checkmark.svg">
+                    </div>
+
+                    <div class="ncaptcha-text">I'm not a human</div>
+
+                    <div class="ncaptcha-info">
+                        <img src="/assets/icon.svg" width="32px" height="32px">
+                        <div>nCAPTCHA</div>
+                        <div>Source code</div>
+                    </div>
+                </div>
+
+                <dialog class="ncaptcha-dialog">
+
+                    <div class="ncaptcha-question">
+                        <div class="ncaptcha-title">
+                            Select all images with
+                            <strong>traffic lights</strong>
+                            Click verify once there are none left.
+                        </div>
+                        <div class="ncaptcha-images">
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image" style="transform: scale(0.8);">
+                                <img class="ncaptcha-select" src="/assets/checkmark-circle.svg">
+                            </div>
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image"></div>
+                            <div class="ncaptcha-image"></div>
+                        </div>
+                    </div>
+
+                    <div class="ncaptcha-actions">
+                        <button class="ncaptcha-verify-btn" type="button">VERIFY</button>
+                    </div>
+
+                </dialog>
+
+            </div>
+
+        </div>
+
+        <button type="submit">Submit</button>
+
+    </form>
+</body>
+
+</html>

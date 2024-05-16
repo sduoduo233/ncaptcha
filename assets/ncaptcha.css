@@ -1,0 +1,192 @@
+.ncaptcha-container {
+    width: 300px;
+    height: 80px;
+
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, .08);
+    background: #f9f9f9;
+
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-left: 12px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.ncaptcha-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #c1c1c1;
+    border-radius: 2px;
+    background-color: #fff;
+}
+
+.ncaptcha-spinner {
+    width: 24px;
+    height: 24px;
+    border: 6px solid #4d90fe;
+    border-radius: 24px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+
+    animation: spinner-spin linear 2.5s infinite;
+}
+
+.ncaptcha-checkmark>img {
+    width: 38px;
+    height: 38px;
+    margin-right: -14px;
+}
+
+.ncaptcha-text {
+    margin-left: 12px;
+    font-size: 16px;
+    font-family: Roboto, arial, sans-serif;
+}
+
+.ncaptcha-info {
+    margin-left: auto;
+    margin-right: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    font-family: Roboto, arial, sans-serif;
+    font-size: 10px;
+    color: #555;
+}
+
+.ncaptcha-info>div {
+    font-weight: 400;
+    margin-top: 2px;
+}
+
+@keyframes spinner-spin {
+    0% {
+        transform: rotateZ(0deg)
+    }
+
+    10% {
+        transform: rotateZ(135deg)
+    }
+
+    25% {
+        transform: rotateZ(245deg)
+    }
+
+    60% {
+        transform: rotateZ(700deg)
+    }
+
+    75% {
+        transform: rotateZ(810deg)
+    }
+
+    to {
+        transform: rotateZ(1080deg)
+    }
+}
+
+/* Popup window */
+
+.ncaptcha-dialog::backdrop {
+    background: rgb(255, 255, 255);
+    opacity: 0.5;
+}
+
+.ncaptcha-dialog {
+    border: 0px;
+    padding: 0px;
+}
+
+.ncaptcha-dialog[open] {
+    animation: fadeIn 0.3s ease;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.ncaptcha-question {
+    border: 1px solid rgb(204, 204, 204);
+    padding: 7px;
+}
+
+.ncaptcha-actions {
+    border: 1px solid rgb(204, 204, 204);
+    border-top: 0px;
+    padding: 7px;
+
+    display: flex;
+}
+
+.ncaptcha-title {
+    width: 352px;
+    height: 100px;
+    background-color: #1a73e8;
+
+    font-family: Roboto, arial, sans-serif;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 24px;
+}
+
+.ncaptcha-title>strong {
+    font-size: 28px;
+}
+
+.ncaptcha-images {
+    margin-top: 7px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.ncaptcha-image {
+    flex: auto;
+    min-width: 30%;
+    aspect-ratio: 1 / 1;
+
+    background: url(https://picsum.photos/600/600);
+    background-size: cover;
+}
+
+.ncaptcha-verify-btn {
+    cursor: pointer;
+    height: 42px;
+    min-width: 100px;
+    margin-left: auto;
+    border: 0;
+    background: #1a73e8;
+    color: white;
+    font-family: Roboto, arial, sans-serif;
+    font-size: 14px;
+    border-radius: 2px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.ncaptcha-select {
+    width: 32px;
+    height: 32px;
+    background-color: white;
+    border-radius: 32px;
+    position: absolute;
+    top: -16px;
+    left: -16px;
+}
