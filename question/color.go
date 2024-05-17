@@ -19,7 +19,7 @@ func color() ([]byte, string, []int, error) {
 	for row := range 3 {
 		for col := range 3 {
 			if row*3+col == ans[0] {
-				ctx.SetRGB255(r+randint(-5, 5), g+randint(-5, 5), b+randint(-5, 5))
+				ctx.SetRGB255(r+randint(-2, 2), g+randint(-2, 2), b+randint(-2, 2))
 			} else {
 				ctx.SetRGB255(r, g, b)
 			}
