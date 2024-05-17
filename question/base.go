@@ -14,7 +14,7 @@ const (
 // answers are integers from 1-9 representing correct tiles
 type Question func() ([]byte, string, []int, error)
 
-var questions = []Question{pi}
+var questions = []Question{pi, color}
 
 func NewQuestion() ([]byte, string, []int, error) {
 	n := randint(0, len(questions))
