@@ -122,6 +122,8 @@ func main() {
 			return
 		}
 
+		log.Println("verify", token)
+
 		io.WriteString(w, "ok")
 	})
 
@@ -178,16 +180,14 @@ func main() {
 		}
 
 		// read answers
-		if r.FormValue("ans") == "" {
-			io.WriteString(w, "wrong answer")
-			return
-		}
-
 		ansString := strings.Split(r.FormValue("ans"), ",")
 		ans := make([]int, 0)
 
 		// convert strings to integers
 		for _, v := range ansString {
+			if v == "" {
+				continue
+			}
 			n, err := strconv.Atoi(v)
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
