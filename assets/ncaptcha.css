@@ -23,6 +23,7 @@
     color: red;
     left: 0;
     top: 0;
+    font-family: Roboto, arial, sans-serif;
 }
 
 .ncaptcha-checkbox {
