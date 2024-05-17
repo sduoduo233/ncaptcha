@@ -11,6 +11,7 @@ import (
 	"log"
 	"ncaptcha/question"
 	"net/http"
+	"net/url"
 	"slices"
 	"strconv"
 	"strings"
@@ -69,6 +70,30 @@ func main() {
 	mux.HandleFunc("/demo", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method == "POST" {
 
+			form := url.Values{}
+			form.Set("token", r.FormValue("ncaptcha-response"))
+
+			resp, err := http.PostForm("http://127.0.0.1:8080/verify", form)
+			if err != nil {
+				log.Println("error while verifying token", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			defer resp.Body.Close()
+
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				log.Println("error while verifying token", err)
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+
+			if string(body) != "ok" {
+				io.WriteString(w, "your ncaptcha response is invalid")
+				return
+			}
+
 			w.Header().Set("Content-Type", "text/html")
 
 			name := html.EscapeString(r.FormValue("name"))
@@ -77,14 +102,32 @@ func main() {
 			io.WriteString(w, fmt.Sprintf("<h1>Hello, %s</h1><p>hello, %s</p>", name, hello))
 
 		} else {
+
 			http.ServeFile(w, r, "./assets/demo.html")
 		}
 
 	})
 
+	// verify a token
+	mux.HandleFunc("/verify", func(w http.ResponseWriter, r *http.Request) {
+		token := r.FormValue("token")
+		t, ok := tokens.LoadAndDelete(token)
+		if !ok {
+			io.WriteString(w, "invalid")
+			return
+		}
+
+		if t.(time.Time).Before(time.Now()) {
+			io.WriteString(w, "invalid")
+			return
+		}
+
+		io.WriteString(w, "ok")
+	})
+
 	// generate a question
 	mux.HandleFunc("/challenge", func(w http.ResponseWriter, r *http.Request) {
-		img, ans, err := question.NewQuestion()
+		img, s, ans, err := question.NewQuestion()
 		if err != nil {
 			log.Println("error while generating challenge:", err)
 			w.WriteHeader(http.StatusInternalServerError)
@@ -104,10 +147,12 @@ func main() {
 		resp := struct {
 			Challenge string `json:"challenge"`
 			Id        string `json:"id"`
+			Select    string `json:"select"`
 		}{}
 
 		resp.Challenge = base64.StdEncoding.EncodeToString(img)
 		resp.Id = challengeId
+		resp.Select = s
 
 		json.NewEncoder(w).Encode(resp)
 	})
@@ -127,12 +172,17 @@ func main() {
 
 		theChallenge := q.(*challenge)
 
-		if theChallenge.expire.After(time.Now()) {
+		if theChallenge.expire.Before(time.Now()) {
 			io.WriteString(w, "challenge was expired")
 			return
 		}
 
 		// read answers
+		if r.FormValue("ans") == "" {
+			io.WriteString(w, "wrong answer")
+			return
+		}
+
 		ansString := strings.Split(r.FormValue("ans"), ",")
 		ans := make([]int, 0)
 
@@ -159,7 +209,7 @@ func main() {
 
 		log.Println("new token", token)
 
-		io.WriteString(w, token)
+		io.WriteString(w, "TOKEN_"+token)
 	})
 
 	http.ListenAndServe("127.0.0.1:8080", mux)

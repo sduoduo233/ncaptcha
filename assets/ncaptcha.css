@@ -2,6 +2,8 @@
     width: 300px;
     height: 80px;
 
+    position: relative;
+
     border: 1px solid #d3d3d3;
     border-radius: 3px;
     box-shadow: 0 0 4px 1px rgba(0, 0, 0, .08);
@@ -16,6 +18,13 @@
     flex-direction: row;
 }
 
+.ncaptcha-error {
+    position: absolute;
+    color: red;
+    left: 0;
+    top: 0;
+}
+
 .ncaptcha-checkbox {
     width: 24px;
     height: 24px;
@@ -27,7 +36,7 @@
 .ncaptcha-spinner {
     width: 24px;
     height: 24px;
-    border: 6px solid #4d90fe;
+    border: 5px solid #4d90fe;
     border-radius: 24px;
     border-bottom-color: transparent;
     border-left-color: transparent;
@@ -38,7 +47,7 @@
 .ncaptcha-checkmark>img {
     width: 38px;
     height: 38px;
-    margin-right: -14px;
+    margin-right: -8px;
 }
 
 .ncaptcha-text {
@@ -101,6 +110,7 @@
 .ncaptcha-dialog {
     border: 0px;
     padding: 0px;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.08);
 }
 
 .ncaptcha-dialog[open] {
@@ -112,12 +122,14 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
 }
 
 .ncaptcha-question {
+    width: fit-content;
     border: 1px solid rgb(204, 204, 204);
     padding: 7px;
 }
@@ -155,6 +167,7 @@
     display: flex;
     gap: 4px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .ncaptcha-image {
@@ -162,8 +175,9 @@
     min-width: 30%;
     aspect-ratio: 1 / 1;
 
-    background: url(https://picsum.photos/600/600);
-    background-size: cover;
+    background-size: 100% 100%;
+
+    transition: all 0.1s ease;
 }
 
 .ncaptcha-verify-btn {
@@ -179,6 +193,11 @@
     border-radius: 2px;
     padding-right: 10px;
     padding-left: 10px;
+}
+
+.ncaptcha-verify-btn:disabled {
+    background-color: rgba(73, 143, 225, 0.50);
+    cursor: default;
 }
 
 .ncaptcha-select {

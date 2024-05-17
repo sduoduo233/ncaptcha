@@ -12,16 +12,16 @@ const (
 // question should be a 600x600 px image
 //
 // answers are integers from 1-9 representing correct tiles
-type Question func() ([]byte, []int, error)
+type Question func() ([]byte, string, []int, error)
 
 var questions = []Question{add}
 
-func NewQuestion() ([]byte, []int, error) {
+func NewQuestion() ([]byte, string, []int, error) {
 	n := randint(0, len(questions))
 	q := questions[n]
-	img, ans, err := q()
+	img, s, ans, err := q()
 	if err != nil {
-		return nil, []int{}, fmt.Errorf("question %d: %w", n, err)
+		return nil, "", []int{}, fmt.Errorf("question %d: %w", n, err)
 	}
-	return img, ans, nil
+	return img, s, ans, nil
 }
