@@ -10,7 +10,7 @@ import (
 func randomDigitRune(n string) rune {
 	nn, err := strconv.Atoi(n)
 	if err != nil {
-		panic(err)
+		return []rune(n)[0]
 	}
 	for {
 		i := randint(0, 9)

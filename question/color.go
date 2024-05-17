@@ -37,5 +37,5 @@ func color() ([]byte, string, []int, error) {
 	slices.Sort(ans)
 	ans = slices.Compact(ans)
 
-	return buf.Bytes(), "squares with different color", ans, nil
+	return buf.Bytes(), "different color", ans, nil
 }
