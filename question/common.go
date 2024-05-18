@@ -31,6 +31,14 @@ func randint(min, max int) int {
 	return min + int(n.Int64())
 }
 
+func randomOffset(m int) int {
+	if randint(0, 2) == 0 {
+		return -1 * randint(1, m)
+	} else {
+		return randint(1, m)
+	}
+}
+
 func replaceAtIndex(in string, r rune, i int) string {
 	out := []rune(in)
 	out[i] = r
