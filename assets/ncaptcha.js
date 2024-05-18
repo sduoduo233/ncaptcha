@@ -7,8 +7,12 @@
     alert("nCAPTCHA: Your browser does not support HTML dialog. Please update your browser.")
   }
 
-
   let API = "http://127.0.0.1:8080";
+
+  document.write(`
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link href="${API}/assets/ncaptcha.css" rel="stylesheet">
+  `)
 
   let html = `
 <div class="ncaptcha-base">
@@ -143,10 +147,10 @@
           [0, 200], [200, 200], [400, 200],
           [0, 400], [200, 400], [400, 400]
         ];
-        
+
         let tiles = dialog.querySelectorAll(".ncaptcha-image");
         for (let i = 0; i < tiles.length; i++) {
-          await drawImage(context, resp["challenge"], coordinates[i][0],coordinates[i][1])
+          await drawImage(context, resp["challenge"], coordinates[i][0], coordinates[i][1])
           let blob = await canvas.convertToBlob();
           tiles.item(i).style.background = "url(" + URL.createObjectURL(blob) + ")";
           tiles.item(i).style["background-size"] = "cover";
@@ -198,7 +202,7 @@
           }
 
           dialog.close();
-          
+
         });
 
         dialog.showModal();
