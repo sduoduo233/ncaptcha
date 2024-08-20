@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"crypto/rand"
 	"encoding/base64"
 	"encoding/hex"
@@ -12,6 +13,7 @@ import (
 	"ncaptcha/question"
 	"net/http"
 	"net/url"
+	"os"
 	"slices"
 	"strconv"
 	"strings"
@@ -34,6 +36,8 @@ func randomToken() string {
 }
 
 func main() {
+	publicApi := os.Getenv("NCAPTCHA_API")
+
 	challenges := sync.Map{} // make(map[string]*challenge)
 	tokens := sync.Map{}     // make(map[string]time.Time) token and expiry time
 
@@ -49,7 +53,15 @@ func main() {
 	})
 
 	mux.HandleFunc("/assets/ncaptcha.js", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./assets/ncaptcha.js")
+		content, err := os.ReadFile("./assets/ncaptcha.js")
+		if err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+		content = bytes.Replace(content, []byte("<PUBLIC_API>"), []byte(publicApi), 1)
+		w.Header().Set("Content-Type", "application/javascript")
+		w.WriteHeader(http.StatusOK)
+		w.Write(content)
 	})
 
 	mux.HandleFunc("/assets/ncaptcha.css", func(w http.ResponseWriter, r *http.Request) {
@@ -212,5 +224,10 @@ func main() {
 		io.WriteString(w, "TOKEN_"+token)
 	})
 
-	http.ListenAndServe("127.0.0.1:8080", mux)
+	log.Println("listening at 127.0.0.1:8080")
+
+	err := http.ListenAndServe("127.0.0.1:8080", mux)
+	if err != nil {
+		log.Println("could not start server: " + err.Error())
+	}
 }

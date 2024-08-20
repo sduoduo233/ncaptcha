@@ -13,7 +13,7 @@ func e() ([]byte, string, []int, error) {
 	ans := []int{}
 
 	ctx := gg.NewContext(WIDTH, HEIGHT)
-	err := ctx.LoadFontFace("./unifont-15.0.06.ttf", 64)
+	err := loadFontFace(ctx, 64)
 	if err != nil {
 		return nil, "", []int{}, err
 	}

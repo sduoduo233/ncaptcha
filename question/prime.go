@@ -15,7 +15,10 @@ func prime() ([]byte, string, []int, error) {
 	ctx.SetRGB(0, 0, 0)
 	ctx.Clear()
 
-	ctx.LoadFontFace("./unifont-15.0.06.ttf", 32)
+	err := loadFontFace(ctx, 32)
+	if err != nil {
+		return nil, "", nil, err
+	}
 
 	_, h := ctx.MeasureString("0123456789")
 
@@ -34,7 +37,7 @@ func prime() ([]byte, string, []int, error) {
 	}
 
 	buf := &bytes.Buffer{}
-	err := ctx.EncodePNG(buf)
+	err = ctx.EncodePNG(buf)
 	if err != nil {
 		return nil, "", []int{}, err
 	}
