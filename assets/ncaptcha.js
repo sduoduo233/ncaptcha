@@ -35,7 +35,7 @@
       <div class="ncaptcha-info">
           <img src="${API}/assets/icon.svg" width="32px" height="32px">
           <div>nCAPTCHA</div>
-          <div>Source code</div>
+          <div><a href="https://github.com/sduoduo233/ncaptcha" style="text-decoration: none; color: inherit;">Source code</a></div>
       </div>
   </div>
 
