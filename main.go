@@ -38,6 +38,11 @@ func randomToken() string {
 }
 
 func main() {
+	listenAt := os.Getenv("NCAPTCHA_LISTEN")
+	if listenAt == "" {
+		listenAt = "127.0.0.1:8080"
+	}
+
 	publicApi := os.Getenv("NCAPTCHA_API")
 
 	challenges := sync.Map{} // make(map[string]*challenge)
@@ -87,7 +92,7 @@ func main() {
 			form := url.Values{}
 			form.Set("token", r.FormValue("ncaptcha-response"))
 
-			resp, err := http.PostForm("http://127.0.0.1:8080/verify", form)
+			resp, err := http.PostForm("http://"+listenAt+"/verify", form)
 			if err != nil {
 				log.Println("error while verifying token", err)
 				w.WriteHeader(http.StatusInternalServerError)
@@ -226,10 +231,6 @@ func main() {
 		io.WriteString(w, "TOKEN_"+token)
 	})
 
-	listenAt := os.Getenv("NCAPTCHA_LISTEN")
-	if listenAt == "" {
-		listenAt = "127.0.0.1:8080"
-	}
 	log.Println("listening at " + listenAt)
 
 	err := http.ListenAndServe(listenAt, mux)
