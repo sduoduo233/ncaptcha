@@ -21,6 +21,8 @@ import (
 	"time"
 )
 
+const YT_EMBED = `<iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`
+
 type challenge struct {
 	answers []int
 	expire  time.Time
@@ -111,7 +113,7 @@ func main() {
 			name := html.EscapeString(r.FormValue("name"))
 			hello := html.EscapeString(r.FormValue("hello"))
 
-			io.WriteString(w, fmt.Sprintf("<h1>Hello, %s</h1><p>hello, %s</p>", name, hello))
+			io.WriteString(w, fmt.Sprintf("<h1>Hello, %s</h1><p>hello, %s</p>"+YT_EMBED, name, hello))
 
 		} else {
 
