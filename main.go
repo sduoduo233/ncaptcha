@@ -224,9 +224,13 @@ func main() {
 		io.WriteString(w, "TOKEN_"+token)
 	})
 
-	log.Println("listening at 127.0.0.1:8080")
+	listenAt := os.Getenv("NCAPTCHA_LISTEN")
+	if listenAt == "" {
+		listenAt = "127.0.0.1:8080"
+	}
+	log.Println("listening at " + listenAt)
 
-	err := http.ListenAndServe("127.0.0.1:8080", mux)
+	err := http.ListenAndServe(listenAt, mux)
 	if err != nil {
 		log.Println("could not start server: " + err.Error())
 	}
